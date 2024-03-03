@@ -2,7 +2,13 @@ package twitter
 
 import (
 	"context"
+	"errors"
 	"time"
+)
+
+var (
+	ErrUsernameTaken = errors.New("username taken")
+	ErrEmailTaken    = errors.New("email taken")
 )
 
 type UserRepo interface {
