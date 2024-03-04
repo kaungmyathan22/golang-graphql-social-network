@@ -9,16 +9,17 @@ import (
 	"github.com/kaungmyathan22/golang-graphql-social-network/mocks"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func TestAuthService_Register(t *testing.T) {
+	passwordCost = bcrypt.MinCost
 	validInput := twitter.RegisterInput{
 		Username:        "bob",
 		Email:           "bob@example.com",
 		Password:        "password",
 		ConfirmPassword: "password",
 	}
-
 	t.Run("can register", func(t *testing.T) {
 		ctx := context.Background()
 
