@@ -69,8 +69,15 @@ func (repo UserRepo) GetByEmail(ctx context.Context, email string) (twitter.User
 }
 
 func (repo UserRepo) GetByID(ctx context.Context, id string) (twitter.User, error) {
-	//TODO implement me
-	panic("implement me")
+	query := `SELECT * FROM users WHERE id = $1 LIMIT 1;`
+	user := twitter.User{}
+	if err := pgxscan.Get(ctx, repo.DB.Pool, &user, query, id); err != nil {
+		if pgxscan.NotFound(err) {
+			return twitter.User{}, twitter.ErrNotFound
+		}
+		return twitter.User{}, fmt.Errorf("error select: %v", err)
+	}
+	return user, nil
 }
 
 func (repo UserRepo) GetByIds(ctx context.Context, ids []string) ([]twitter.User, error) {
