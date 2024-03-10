@@ -17,5 +17,5 @@ func main() {
 	if err := db.Migrate(); err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Server is running.")
+	fmt.Println("Server is running....")
 }
